@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="60">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%level] %c{1} - %msg%n"/>
+        </Console>
+    </Appenders>
+
+
+
+
+    <Loggers>
+        <Root level="error"> <!-- 定义Root Logger，其日志级别为error -->
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="org.yaccc.leaf.starter.boot.LeafServerBootstarp" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </Loggers>
+</Configuration>
