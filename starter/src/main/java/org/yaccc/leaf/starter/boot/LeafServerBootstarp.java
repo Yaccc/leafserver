@@ -1,6 +1,7 @@
 package org.yaccc.leaf.starter.boot;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @Slf4j
 @SpringBootApplication(scanBasePackages = {"org.yaccc.leaf.*"})
+@MapperScan("org.yaccc.leaf.persistent")
 public class LeafServerBootstarp {
 
     public static void main(String[] args) {

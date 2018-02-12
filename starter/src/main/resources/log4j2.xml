@@ -7,7 +7,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="error"> <!-- 定义Root Logger，其日志级别为error -->
+        <Root level="info"> <!-- 定义Root Logger，其日志级别为error -->
             <AppenderRef ref="Console"/>
         </Root>
         <Logger name="org.yaccc.leaf.starter.boot.LeafServerBootstarp" level="info" additivity="false">

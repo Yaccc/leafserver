@@ -1,0 +1,25 @@
+ server :
+   port : 8080
+   address : localhost
+
+
+#https://github.com/alibaba/druid/blob/master/druid-spring-boot-starter/README.md
+ spring :
+   datasource :
+     druid :
+       url : jdbc:mysql://localhost/leaf?characterEncoding=utf-8
+       username : root
+       password : 123456
+       driver-class-name : com.mysql.jdbc.Driver
+       type : com.alibaba.druid.pool.DruidDataSource
+       initialSize : 5
+       minIdle : 5
+       maxActive : 20
+       maxWait : 60000
+       testOnBorrow : false
+       testWhileIdle : true
+       poolPreparedStatements : true
+       maxPoolPreparedStatementPerConnectionSize : 20
+       minEvictableIdleTimeMillis : 30000
+
+
