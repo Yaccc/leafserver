@@ -11,17 +11,32 @@
 
     <artifactId>starter</artifactId>
 
+    <profiles>
+        <profile>
+            <id>product</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <resource.path>src/main/profile/product</resource.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <resource.path>src/main/profile/staging</resource.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <resource.path>src/main/profile/dev</resource.path>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter</artifactId>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>logback-classic</artifactId>-->
-                    <!--<groupId>ch.qos.logback</groupId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -32,6 +47,19 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${resource.path}</directory><!--根据profile 确定资源-->
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+            </resource>
+        </resources>
+    </build>
+
+
 
 
 </project>
