@@ -17,7 +17,6 @@ public class SequenceImpl implements Sequence {
 
 
 
-
         return null;
     }
 
