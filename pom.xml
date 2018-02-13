@@ -13,10 +13,10 @@
         <version>2.0.0.RC1</version>
     </parent>
     <modules>
-        <module>core</module>
-        <module>starter</module>
-        <module>web</module>
-        <module>persistent</module>
+        <module>leafserver-core</module>
+        <module>leafserver-starter</module>
+        <module>leafserver-web</module>
+        <module>leafserver-persistent</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

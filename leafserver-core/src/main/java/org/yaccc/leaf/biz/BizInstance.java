@@ -26,7 +26,6 @@ public class BizInstance {
     @PostConstruct
     private void init(){
 
-        
 
 
     }
