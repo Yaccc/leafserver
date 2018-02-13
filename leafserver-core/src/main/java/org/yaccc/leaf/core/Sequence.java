@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface Sequence {
 
-    Long nextValue(String appName,String bizId);
+    Long nextValue(String appName,String key);
 
 
-    List<Long> nextListValues(String appName,String bizId);
+    List<Long> nextListValues(String appName,String key);
 
 }
