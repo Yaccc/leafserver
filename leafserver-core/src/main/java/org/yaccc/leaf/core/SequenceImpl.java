@@ -21,6 +21,7 @@ public class SequenceImpl implements Sequence {
         BizInstance bizInstance=new BizInstance();
         bizInstance.setAppName(appName);
         bizInstance.setKey(key);
+        //if not contains returen -1;
         if (allBizInstance.contains(bizInstance)){
 
 
