@@ -4,6 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.sql.DataSource;
 
 /**
  * Created by xiezhaodong  on 2018/2/11
@@ -12,6 +17,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {"org.yaccc.leaf.*"})
 @MapperScan("org.yaccc.leaf.persistent")
 public class LeafServerBootstarp {
+
+
+    @Bean(name = "txManager")
+    public PlatformTransactionManager txManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
 
     public static void main(String[] args) {
         try {
