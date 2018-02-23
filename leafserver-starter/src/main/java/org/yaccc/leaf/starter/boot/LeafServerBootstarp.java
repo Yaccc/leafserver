@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 @MapperScan("org.yaccc.leaf.persistent")
 public class LeafServerBootstarp {
 
-
     @Bean(name = "txManager")
     public PlatformTransactionManager txManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
