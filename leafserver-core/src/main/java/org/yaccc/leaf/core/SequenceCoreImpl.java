@@ -1,11 +1,11 @@
 package org.yaccc.leaf.core;
 
 import lombok.NonNull;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.yaccc.leaf.biz.BizInstance;
 import org.yaccc.leaf.model.BizSegmentsBuffer;
-import org.yaccc.leaf.persistent.model.AllocModel;
 import org.yaccc.leaf.persistent.model.Segment;
 import org.yaccc.leaf.persistent.service.SequenceService;
 
@@ -17,7 +17,7 @@ import java.util.Set;
  * Created by xiezhaodong  on 2018/2/12
  */
 @Slf4j
-public class SequenceImpl implements Sequence {
+public class SequenceCoreImpl implements Sequence {
     @Autowired
     SequenceService sequenceService;
 
@@ -39,11 +39,18 @@ public class SequenceImpl implements Sequence {
         return -1L;
     }
 
+    @Synchronized
     private Long getIdFromInstance(BizInstance instance) {
         BizSegmentsBuffer bizSegmentsBuffer = instance.getBizSegmentsBuffer();
         if (bizSegmentsBuffer == null) {
+            //first init
             Segment segment = sequenceService.buildSegment(instance.getAppName(), instance.getKey());
-            //todo
+            segment.setInitCompleted(true);
+            //
+            bizSegmentsBuffer = BizSegmentsBuffer.builder().build();
+            bizSegmentsBuffer.setFirstSegment(segment);
+            return segment.getCurrent().incrementAndGet();
+        } else {
 
 
         }

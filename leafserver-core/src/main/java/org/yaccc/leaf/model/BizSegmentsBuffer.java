@@ -14,8 +14,16 @@ import org.yaccc.leaf.persistent.model.Segment;
 @Builder
 public class BizSegmentsBuffer {
 
-    private Segment[] segments;
-    private int currentSegment;
+    private Segment[] segments = new Segment[2];
+    private int currentSegment = 0;
+
+    public void setFirstSegment(Segment segment) {
+        segments[0] = segment;
+    }
+
+    public void setSecondSegment(Segment segment) {
+        segments[1] = segment;
+    }
 
 
 }

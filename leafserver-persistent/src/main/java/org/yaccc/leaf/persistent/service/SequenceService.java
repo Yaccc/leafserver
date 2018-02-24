@@ -8,7 +8,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.yaccc.leaf.persistent.SequenceDao;
-import org.yaccc.leaf.persistent.model.AllocModel;
 import org.yaccc.leaf.persistent.model.CoreTable;
 import org.yaccc.leaf.persistent.model.Segment;
 
@@ -40,7 +39,7 @@ public class SequenceService {
                 log.error("transaction rollback !!!!,update SQL execute status is {}. and bizInfo is {}", success0, oneBizInfo);
                 return null;
             }
-
+            log.info("alloc [{},{}] new segment,maxid-{},minid-{},step-{}", appName, key, oneBizInfo.getNowMaxId(), oneBizInfo.getNowMaxId() - oneBizInfo.getStep(), oneBizInfo.getStep());
             return Segment.builder().
                     min(oneBizInfo.getNowMaxId() - oneBizInfo.getStep())
                     .max(oneBizInfo.getNowMaxId() - 1)
