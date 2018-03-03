@@ -15,7 +15,9 @@ import org.yaccc.leaf.persistent.model.CoreTable;
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by xiezhaodong  on 2018/2/12
@@ -69,7 +71,7 @@ public class BizInstance {
             bizInstance.setKey(coreTable.getKey());
             bizInstance.setStep(bizInstance.getStep());
             allBizInstance.add(bizInstance);
-            log.info("|init appname:[{}] key:[{}] step:[{}] success!", coreTable.getAppName(), coreTable.getKey(), coreTable.getStep());
+            log.info("|init appname:[{}], key:[{}], step:[{}] success!", coreTable.getAppName(), coreTable.getKey(), coreTable.getStep());
 
         });
     }

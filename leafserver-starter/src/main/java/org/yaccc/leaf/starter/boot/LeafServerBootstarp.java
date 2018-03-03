@@ -28,23 +28,10 @@ public class LeafServerBootstarp {
         try {
             log.info("Initializing leafserver...");
             SpringApplication.run(LeafServerBootstarp.class, args);
+            log.info("Started leafserver , enjoy it!!");
         } catch (Exception e) {
             log.error("start leafserver error {}",e);
             System.exit(0);
-        }finally {
-           String leaf= "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆◆◆◆　　　　　　　　　　　  ◆◆◆　　　　　　　　　　 ◆◆◆◆◆　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　　　◆◆◆　　　　　　　　　　 ◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　　　◆◆◆◆　　　　　　　　　　◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　　◆◆　◆◆　　　　　　　　　　◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆◆◆◆　　　　　　　　　　  ◆◆　◆◆　　　　　　　　　　◆◆◆◆◆　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　　◆◆　◆◆◆　　　　　　　　　 ◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　◆◆◆◆◆◆◆◆　　　　　　　　　 ◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　◆◆　　　◆◆　　　　　　　　　◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆　　　　　　　　　　　　　◆◆　　　　　　　　　　　　◆◆　　　◆◆　　　　　　　　　◆◆　　　　　　　　\n" +
-                    "　　　　　◆◆◆◆◆◆　　　　　　　　　   ◆◆◆◆◆　　　　　　　　　  ◆◆　　　◆◆◆　　　　　　　　 ◆◆　　";
-            log.info(leaf);
-            log.info("Started leafserver , enjoy it!!");
         }
     }
 

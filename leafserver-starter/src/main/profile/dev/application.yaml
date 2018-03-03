@@ -21,5 +21,7 @@
        poolPreparedStatements : true
        maxPoolPreparedStatementPerConnectionSize : 20
        minEvictableIdleTimeMillis : 30000
-
+   output :
+     ansi :
+       enabled : ALWAYS
 
