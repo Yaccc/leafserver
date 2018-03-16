@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.yaccc.leafserver.persistent.SequenceDao;
 import org.yaccc.leafserver.persistent.model.CoreTable;
@@ -30,7 +29,7 @@ public class SequenceService {
     public Segment buildSegment(@NonNull String appName, @NonNull String key) {
 
         // get new segment data from database
-        return transactionTemplate.execute((TransactionCallback<Segment>) status -> {
+        return transactionTemplate.execute(status -> {
 
             int success0 = sequenceDao.updateMaxId(appName, key);
             CoreTable oneBizInfo = sequenceDao.getOneBizInfo(appName, key);
@@ -40,8 +39,8 @@ public class SequenceService {
                 return null;
             }
             log.info("alloc [{},{}] new segment,maxid-{},minid-{},step-{}", appName, key, oneBizInfo.getNowMaxId(), oneBizInfo.getNowMaxId() - oneBizInfo.getStep(), oneBizInfo.getStep());
-            return Segment.builder().
-                    min(oneBizInfo.getNowMaxId() - oneBizInfo.getStep())
+            return Segment.builder()
+                    .min(oneBizInfo.getNowMaxId() - oneBizInfo.getStep())
                     .max(oneBizInfo.getNowMaxId() - 1)
                     .step(oneBizInfo.getStep())
                     .build();
