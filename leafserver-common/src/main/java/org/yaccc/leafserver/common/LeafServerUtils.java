@@ -13,7 +13,7 @@ public class LeafServerUtils {
                     result.setErrMsg("xxxxx-1");
                     break;
                 case -2:
-                    result.setErrMsg("xxxx-2");
+                    result.setErrMsg("xxxxx-2");
                     break;
                 default:
                     break;
