@@ -1,4 +1,4 @@
-package org.yaccc.leaf.starter.boot;
+package org.yaccc.leafserver.starter.boot;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -14,8 +14,8 @@ import javax.sql.DataSource;
  * Created by xiezhaodong  on 2018/2/11
  */
 @Slf4j
-@SpringBootApplication(scanBasePackages = {"org.yaccc.leaf.*"})
-@MapperScan("org.yaccc.leaf.persistent")
+@SpringBootApplication(scanBasePackages = {"org.yaccc.leafserver.*"})
+@MapperScan("org.yaccc.leafserver.persistent")
 public class LeafServerBootstarp {
 
     @Bean(name = "txManager")

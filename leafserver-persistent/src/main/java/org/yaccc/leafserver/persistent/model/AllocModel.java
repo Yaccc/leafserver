@@ -1,4 +1,4 @@
-package org.yaccc.leaf.persistent.model;
+package org.yaccc.leafserver.persistent.model;
 
 import lombok.Builder;
 import lombok.Data;

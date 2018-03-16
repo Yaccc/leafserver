@@ -1,13 +1,15 @@
-package org.yaccc.leaf.core;
+package org.yaccc.leafserver.core;
 
 import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.yaccc.leaf.biz.BizInstance;
-import org.yaccc.leaf.model.BizSegmentsBuffer;
-import org.yaccc.leaf.persistent.model.Segment;
-import org.yaccc.leaf.persistent.service.SequenceService;
+import org.yaccc.leafserver.biz.BizInstance;
+import org.yaccc.leafserver.common.LeafServerUtils;
+import org.yaccc.leafserver.common.Result;
+import org.yaccc.leafserver.model.BizSegmentsBuffer;
+import org.yaccc.leafserver.persistent.model.Segment;
+import org.yaccc.leafserver.persistent.service.SequenceService;
 
 import java.util.Iterator;
 import java.util.List;
@@ -23,20 +25,21 @@ public class SequenceCoreImpl implements Sequence {
 
     @Override
 //    @Synchronized
-    public Long nextValue(@NonNull String appName,@NonNull String key) {
+    public Result nextValue(@NonNull String appName, @NonNull String key) {
+        Result.ResultBuilder rr = Result.builder();
         Set<BizInstance> allBizInstance = BizInstance.allBizInstance;
-        BizInstance biz=new BizInstance();
+        BizInstance biz = new BizInstance();
         biz.setAppName(appName);
         biz.setKey(key);
         //if not contains returen -1;
         Iterator<BizInstance> iterator = allBizInstance.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             BizInstance instance = iterator.next();
-            if (instance.equals(biz)){
-                return  getIdFromInstance(instance);
+            if (instance.equals(biz)) {
+                rr.id(getIdFromInstance(instance));
             }
         }
-        return -1L;
+        return LeafServerUtils.wrapperResult(rr.build());
     }
 
     @Synchronized
@@ -59,7 +62,7 @@ public class SequenceCoreImpl implements Sequence {
     }
 
     @Override
-    public List<Long> nextListValues(@NonNull String appName, @NonNull String key) {
+    public List<Result> nextListValues(@NonNull String appName, @NonNull String key) {
         return null;
     }
 }

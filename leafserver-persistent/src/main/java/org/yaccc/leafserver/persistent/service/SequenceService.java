@@ -1,4 +1,4 @@
-package org.yaccc.leaf.persistent.service;
+package org.yaccc.leafserver.persistent.service;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.yaccc.leaf.persistent.SequenceDao;
-import org.yaccc.leaf.persistent.model.CoreTable;
-import org.yaccc.leaf.persistent.model.Segment;
+import org.yaccc.leafserver.persistent.SequenceDao;
+import org.yaccc.leafserver.persistent.model.CoreTable;
+import org.yaccc.leafserver.persistent.model.Segment;
 
 import javax.annotation.Resource;
 

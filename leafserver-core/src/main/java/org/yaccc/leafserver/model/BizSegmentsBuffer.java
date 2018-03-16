@@ -1,9 +1,9 @@
-package org.yaccc.leaf.model;
+package org.yaccc.leafserver.model;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.yaccc.leaf.persistent.model.Segment;
+import org.yaccc.leafserver.persistent.model.Segment;
 
 /**
  * Created by xiezhaodong  on 2018/2/13

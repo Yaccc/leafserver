@@ -10,10 +10,13 @@
         <Root level="info"> <!-- 定义Root Logger，其日志级别为error -->
             <AppenderRef ref="Console"/>
         </Root>
-        <Logger name="org.yaccc.leaf.starter.boot.LeafServerBootstarp" level="info" additivity="false">
+        <Logger name="org.yaccc.leafserver.starter.boot.LeafServerBootstarp" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.yaccc.leaf.persistent" level="info" additivity="false">
+        <Logger name="org.yaccc.leafserver.persistent" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.yaccc.leafserver.web" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 

@@ -1,4 +1,4 @@
-package org.yaccc.leaf.biz;
+package org.yaccc.leafserver.biz;
 
 import com.google.common.collect.Sets;
 import lombok.EqualsAndHashCode;
@@ -8,9 +8,9 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.yaccc.leaf.model.BizSegmentsBuffer;
-import org.yaccc.leaf.persistent.SequenceDao;
-import org.yaccc.leaf.persistent.model.CoreTable;
+import org.yaccc.leafserver.model.BizSegmentsBuffer;
+import org.yaccc.leafserver.persistent.SequenceDao;
+import org.yaccc.leafserver.persistent.model.CoreTable;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

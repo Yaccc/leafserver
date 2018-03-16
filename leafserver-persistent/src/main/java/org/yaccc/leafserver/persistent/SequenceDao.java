@@ -1,7 +1,7 @@
-package org.yaccc.leaf.persistent;
+package org.yaccc.leafserver.persistent;
 
 import org.apache.ibatis.annotations.*;
-import org.yaccc.leaf.persistent.model.CoreTable;
+import org.yaccc.leafserver.persistent.model.CoreTable;
 
 import java.util.List;
 
