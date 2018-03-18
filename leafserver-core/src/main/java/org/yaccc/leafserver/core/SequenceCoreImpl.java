@@ -12,6 +12,7 @@ import org.yaccc.leafserver.common.Result;
 import org.yaccc.leafserver.common.Segment;
 import org.yaccc.leafserver.persistent.service.SequenceService;
 
+import javax.annotation.PostConstruct;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +24,7 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 @Service
 @ConfigurationProperties(prefix = "org.yaccc.leafserver.pool")
-public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequence {
+public class SequenceCoreImpl extends AsyncSegmentPollDefined implements SequenceCore {
 
     @Autowired
     SequenceService sequenceService;
@@ -38,7 +39,7 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
         biz.setKey(key);
         //if not contains returen -1;
         Iterator<BizInstance> iterator = allBizInstance.iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) {//hang
             BizInstance instance = iterator.next();
             if (instance.equals(biz)) {
                 rr.id(getIdFromInstance(instance));//must instance
@@ -55,23 +56,24 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                 //first segment init
                 Segment segment = sequenceService.buildSegment(instance.getAppName(), instance.getKey());
                 if (segment != null) {
-                    bizSegmentsBuffer = BizSegmentsBuffer.builder().build();
+                    bizSegmentsBuffer = new BizSegmentsBuffer();
                     bizSegmentsBuffer.setFirstSegment(segment);
                     bizSegmentsBuffer.setCurrentSegment(BizSegmentsBuffer.FIRST_SEGMENT);
+                    instance.setBizSegmentsBuffer(bizSegmentsBuffer);
                     return segment.getLongFactory().getAndIncrement();
                 }
             } else {
-                //
                 Segment currentSegment = bizSegmentsBuffer.getCurrentSegment();
+                //current segment can get next id;
+                if (!bizSegmentsBuffer.isNextReady()
+                        && currentSegment.needUpdateOtherSegment(90)
+                        && bizSegmentsBuffer.getIsRunning().compareAndSet(false, true)) {
+                    asyncUpdateSegment(instance, bizSegmentsBuffer);
+                }
+
                 Long segmentId = LeafServerUtils.getSegmentId(currentSegment);
                 if (segmentId != null) {
-                    //current segment can get next id;
-                    if (currentSegment.needUpdateOtherSegment(90) && bizSegmentsBuffer.getIsRunning().compareAndSet(false, true)) {
-                        asyncUpdateSegment(instance, bizSegmentsBuffer);
-                    }
-
                     return segmentId;
-
                 } else {
                     //current segment have no id;
                     //change segment
@@ -79,15 +81,21 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                     if (otherSegment != null && otherSegment.isInitCompleted()) {
                         bizSegmentsBuffer.changeSegment();
                         Segment nowSegment = bizSegmentsBuffer.getCurrentSegment();
-                        return LeafServerUtils.getSegmentId(nowSegment);
+                        return LeafServerUtils.getSegmentId(nowSegment);//null
                     }
-                    return -2L;
+                    return -2L;//all have no id
                 }
 
             }
         }
 
-        return -1L;
+        return -1L;//DB returen null
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info("-------------init post construct method------------------------ ");
+        ExecutorService andGetPool = createAndGetPool();
     }
 
     private void asyncUpdateSegment(BizInstance instance, BizSegmentsBuffer bizSegmentsBuffer) {
@@ -97,6 +105,7 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                 Segment segment = sequenceService.buildSegment(instance.getAppName(), instance.getKey());
                 if (segment != null) {
                     bizSegmentsBuffer.setOtherSegment(segment);
+                    bizSegmentsBuffer.setNextReady(true);
                 }
             } finally {
                 bizSegmentsBuffer.getIsRunning().set(false);

@@ -1,8 +1,6 @@
 package org.yaccc.leafserver.common;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -10,11 +8,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by xiezhaodong  on 2018/2/13
  */
 
-@Getter
-@Setter
-@Builder
+@Data
 public class BizSegmentsBuffer {
     private AtomicBoolean isRunning = new AtomicBoolean(false);
+    private volatile boolean isNextReady = false;
     private Segment[] segments = new Segment[2];
     public static final int FIRST_SEGMENT = 0, SECOND_SEGMENT = 1;
     private volatile int currentSegment = 0;
@@ -23,6 +20,7 @@ public class BizSegmentsBuffer {
         segments[0] = segment;
     }
 
+    @Deprecated
     public void setSecondSegment(Segment segment) {
         segments[1] = segment;
     }
@@ -31,6 +29,7 @@ public class BizSegmentsBuffer {
      * change to other segment,if current segment Consumed 90%
      */
     public void changeSegment() {
+        isNextReady = false;
         currentSegment = currentSegment == FIRST_SEGMENT ? SECOND_SEGMENT : FIRST_SEGMENT;
     }
 
@@ -41,6 +40,7 @@ public class BizSegmentsBuffer {
     public void setOtherSegment(Segment segment) {
         if (currentSegment == 0) {
             segments[1] = segment;
+            return;
         }
         segments[0] = segment;
     }

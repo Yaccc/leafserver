@@ -29,8 +29,8 @@
    yaccc :
      leafserver :
        pool :
-         isUseFixedPool : false
-         fixedPollSize : 8
+         useFixedPool : true
+         fixedPoolSize : 8
          coreSize : 5
          maxCoreSize : 10
          keepAlive : 60

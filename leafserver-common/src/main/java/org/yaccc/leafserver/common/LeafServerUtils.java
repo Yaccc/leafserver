@@ -37,6 +37,7 @@ public class LeafServerUtils {
         if (current.longValue() <= segment.getMax()) {
             return current.getAndIncrement();
         }
+
         segment.setInitCompleted(false);//to false
 
         return null;

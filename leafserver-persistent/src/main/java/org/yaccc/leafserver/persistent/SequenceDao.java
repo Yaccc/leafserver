@@ -31,11 +31,11 @@ public interface SequenceDao {
     List<CoreTable> getAllBizInfo();
 
 
-    @Update("update core_table set now_max_id=now_max_id+step where appName=#{appName} ane key=${key}")
+    @Update("update core_table set now_max_id=now_max_id+step where app_name=#{appName} and `key`=#{key}")
     int updateMaxId(@Param("appName") String appName, @Param("key") String key);
 
 
-    @Select("select * from core_table WHERE appName=#{appName} ane key=${key}")
+    @Select("select * from core_table WHERE app_name=#{appName} and `key`=#{key}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "app_name", property = "appName"),

@@ -13,10 +13,7 @@
         <Logger name="org.yaccc.leafserver.starter.boot.LeafServerBootstarp" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.yaccc.leafserver.persistent" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.yaccc.leafserver.web" level="info" additivity="false">
+        <Logger name="org.yaccc.leafserver" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 

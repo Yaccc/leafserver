@@ -10,6 +10,7 @@ import org.yaccc.leafserver.common.Segment;
 import org.yaccc.leafserver.persistent.SequenceDao;
 import org.yaccc.leafserver.persistent.model.CoreTable;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -24,8 +25,12 @@ public class SequenceService {
     @Autowired
     private SequenceDao sequenceDao;
 
-    private TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+    private TransactionTemplate transactionTemplate = null;
 
+    @PostConstruct
+    public void init() {
+        transactionTemplate = new TransactionTemplate(transactionManager);
+    }
 
     public Segment buildSegment(@NonNull String appName, @NonNull String key) {
 

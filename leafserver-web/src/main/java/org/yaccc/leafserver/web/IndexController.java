@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.yaccc.leafserver.core.SequenceCore;
 import org.yaccc.leafserver.persistent.SequenceDao;
 
 /**
@@ -16,10 +17,20 @@ public class IndexController {
     @Autowired
     SequenceDao sequenceDao;
 
+    @Autowired
+    SequenceCore sequenceCore;
+
     @RequestMapping("/index")
     @ResponseBody
-    String home() {
-        log.info("into controller");
-        return "Hello World!"+sequenceDao.test();
+    String home(String app, String key) {
+        synchronized (sequenceDao) {
+            String re = sequenceCore.nextValue(app, key) + "=--===" + System.currentTimeMillis();
+            // log.info(re);
+            System.out.println(re);
+        }
+
+        return "";
     }
+
+
 }

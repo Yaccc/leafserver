@@ -8,7 +8,7 @@ import java.util.List;
  * Created by xiezhaodong  on 2018/2/12
  */
 
-public interface Sequence {
+public interface SequenceCore {
 
     Result nextValue(String appName, String key);
 
