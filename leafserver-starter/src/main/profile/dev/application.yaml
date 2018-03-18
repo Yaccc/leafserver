@@ -25,3 +25,13 @@
      ansi :
        enabled : ALWAYS
 
+ org :
+   yaccc :
+     leafserver :
+       pool :
+         isUseFixedPool : false
+         fixedPollSize : 8
+         coreSize : 5
+         maxCoreSize : 10
+         keepAlive : 60
+

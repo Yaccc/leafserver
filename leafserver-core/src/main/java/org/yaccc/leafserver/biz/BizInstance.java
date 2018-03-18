@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.yaccc.leafserver.model.BizSegmentsBuffer;
+import org.yaccc.leafserver.common.BizSegmentsBuffer;
 import org.yaccc.leafserver.persistent.SequenceDao;
 import org.yaccc.leafserver.persistent.model.CoreTable;
 
@@ -16,7 +16,6 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -82,33 +81,27 @@ public class BizInstance {
      */
     private void startTimer() {
         log.debug("timer start to update bizInstance");
-        Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                Thread t=new Thread(r);
-                t.setDaemon(true);
-                t.setName("biz-timer");
-                return t;
-            }
+        Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r);
+            t.setDaemon(true);
+            t.setName("biz-timer");
+            return t;
         })
-       .scheduleWithFixedDelay(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<CoreTable> newBizInfo = sequenceDao.getAllBizInfo();
-                    Set<BizInstance> newBizInstance = Sets.newConcurrentHashSet();
-                    //get new all bizInstance
-                    buildBizInstance(newBizInstance, newBizInfo);
-                    Sets.SetView<BizInstance> union = Sets.union(allBizInstance, newBizInstance);
-                    allBizInstance = union.immutableCopy();
-                }catch (Throwable e){
-                    log.info("some thing error {}",e);
-                }finally {
+                .scheduleWithFixedDelay((Runnable) () -> {
+                    try {
+                        List<CoreTable> newBizInfo = sequenceDao.getAllBizInfo();
+                        Set<BizInstance> newBizInstance = Sets.newConcurrentHashSet();
+                        //get new all bizInstance
+                        buildBizInstance(newBizInstance, newBizInfo);
+                        Sets.SetView<BizInstance> union = Sets.union(allBizInstance, newBizInstance);
+                        allBizInstance = union.immutableCopy();
+                    } catch (Throwable e) {
+                        log.info("some thing error {}", e);
+                    } finally {
 
-                }
+                    }
 
-            }
-        },60,60, TimeUnit.SECONDS);
+                }, 60, 60, TimeUnit.SECONDS);
     }
 
 }

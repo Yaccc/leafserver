@@ -1,4 +1,4 @@
-package org.yaccc.leafserver.persistent.model;
+package org.yaccc.leafserver.common;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -24,12 +24,22 @@ public class Segment {
     @Getter
     @Setter
     private volatile boolean initCompleted = false;
+    @Getter
+    @Setter
+    private AtomicLong longFactory = null;
 
-    private AtomicLong current = null;
+    /**
+     * eg:threshold==90 ,then,Remaining 90% ,retur true
+     *
+     * @param threshold
+     * @return
+     */
+    public boolean needUpdateOtherSegment(int threshold) {
 
-    public AtomicLong getCurrent() {
-        if (initCompleted)
-            return new AtomicLong(min);
-        return null;
+        if ((getMax() - longFactory.longValue()) <= (step * threshold / 100)) return true;
+
+        return false;
     }
+
+
 }

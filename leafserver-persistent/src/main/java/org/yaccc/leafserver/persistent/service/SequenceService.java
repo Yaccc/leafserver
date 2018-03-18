@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.yaccc.leafserver.common.Segment;
 import org.yaccc.leafserver.persistent.SequenceDao;
 import org.yaccc.leafserver.persistent.model.CoreTable;
-import org.yaccc.leafserver.persistent.model.Segment;
 
 import javax.annotation.Resource;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by xiezhaodong  on 2018/2/23
@@ -39,11 +40,15 @@ public class SequenceService {
                 return null;
             }
             log.info("alloc [{},{}] new segment,maxid-{},minid-{},step-{}", appName, key, oneBizInfo.getNowMaxId(), oneBizInfo.getNowMaxId() - oneBizInfo.getStep(), oneBizInfo.getStep());
-            return Segment.builder()
+            Segment segment = Segment.builder()//[min,max-1]
                     .min(oneBizInfo.getNowMaxId() - oneBizInfo.getStep())
                     .max(oneBizInfo.getNowMaxId() - 1)
                     .step(oneBizInfo.getStep())
                     .build();
+            segment.setInitCompleted(true);
+            segment.setLongFactory(new AtomicLong(segment.getMin()));
+            return segment;
+
         });
 
 

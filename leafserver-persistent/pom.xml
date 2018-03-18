@@ -27,6 +27,11 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.yaccc.leafserver</groupId>
+            <artifactId>leafserver-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
