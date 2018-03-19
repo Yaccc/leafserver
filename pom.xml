@@ -77,15 +77,12 @@
         </repository>
     </repositories>
 
-    <!--<repositories>-->
-    <!--<repository>-->
-    <!--<id>spring-milestones</id>-->
-    <!--<name>Spring Milestones</name>-->
-    <!--<url>https://repo.spring.io/libs-milestone</url>-->
-    <!--<snapshots>-->
-    <!--<enabled>false</enabled>-->
-    <!--</snapshots>-->
-    <!--</repository>-->
-    <!--</repositories>-->
+    <developers>
+        <developer>
+            <email>pursuer_xie@foxmail.com</email>
+            <name>zhaodong.xzd</name>
+            <url>http://xiezhaodong.me</url>
+        </developer>
+    </developers>
 
 </project>

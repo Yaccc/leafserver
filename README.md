@@ -2,9 +2,15 @@
 A high performance distributed unique ID generation system
 
 
-### feature
+### how to start
 
-   - 分布式唯一ID分发
+```
+1. git clone git@github.com:Yaccc/leafserver.git
+
+```
+
+
+   
 
 
   

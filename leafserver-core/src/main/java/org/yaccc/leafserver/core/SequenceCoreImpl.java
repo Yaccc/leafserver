@@ -81,7 +81,7 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                     if (otherSegment != null && otherSegment.isInitCompleted()) {
                         bizSegmentsBuffer.changeSegment();
                         Segment nowSegment = bizSegmentsBuffer.getCurrentSegment();
-                        return LeafServerUtils.getSegmentId(nowSegment);//null
+                        return LeafServerUtils.getSegmentId(nowSegment);//maybe is not null
                     }
                     return -2L;//all have no id
                 }
@@ -95,7 +95,7 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
     @PostConstruct
     public void init() {
         log.info("-------------init post construct method------------------------ ");
-        ExecutorService andGetPool = createAndGetPool();
+        createAndGetPool();
     }
 
     private void asyncUpdateSegment(BizInstance instance, BizSegmentsBuffer bizSegmentsBuffer) {
