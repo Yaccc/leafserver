@@ -6,8 +6,8 @@ A high performance distributed unique ID generation system
 
 - git clone git@github.com:Yaccc/leafserver.git &&
 cd leafserver
-- find coreTable.sql then create this table in your MySQL
-- cd leafserver/leafserver-starter/src/main/profile/dev && modify username and password to your MySQL's
+- find coreTable.sql then create this table in database *leaf* on your MySQL
+- cd leafserver/leafserver-starter/src/main/profile/dev/application.yaml && modify url, username and password to your MySQL's
 - cd leafserver && mvn clean package
 - cd leafserver/leafserver-starter/target 
 - exec `java -jar leafserver-1.0-SNAPSHOP.jar`
