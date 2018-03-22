@@ -1,7 +1,7 @@
 # leafserver
 A high performance distributed unique ID generation system
 
-### 中文文档
+### [中文文档](https://github.com/Yaccc/leafserver/blob/master/README_CN.MD)
 
 ### how to start
 
