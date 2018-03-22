@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Result {
-    private long id;
+    private Long id;
     private boolean isSuccess = false;
     private String errMsg;
 }

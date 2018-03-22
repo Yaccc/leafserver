@@ -9,14 +9,16 @@ public class LeafServerUtils {
 
     public static Result wrapperResult(Result result) {
         long id = result.getId();
-        if (id < 0) {
+        if (id <= 0) {
             switch ((int) id) {
                 case -1:
-                    result.setErrMsg("xxxxx-1");
+                    result.setErrMsg("database error,can not get db data");
                     break;
                 case -2:
-                    result.setErrMsg("xxxxx-2");
+                    result.setErrMsg("qps is too high");
                     break;
+                case 0:
+                    result.setErrMsg("your step is too short");
                 default:
                     break;
             }

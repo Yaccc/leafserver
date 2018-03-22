@@ -70,7 +70,7 @@ public class BizInstance {
             bizInstance.setKey(coreTable.getKey());
             bizInstance.setStep(bizInstance.getStep());
             allBizInstance.add(bizInstance);
-            log.info("|init appname:[{}], key:[{}], step:[{}] success!", coreTable.getAppName(), coreTable.getKey(), coreTable.getStep());
+            log.info("|init/update appname:[{}], key:[{}], step:[{}] success!", coreTable.getAppName(), coreTable.getKey(), coreTable.getStep());
 
         });
     }
@@ -86,22 +86,21 @@ public class BizInstance {
             t.setDaemon(true);
             t.setName("biz-timer");
             return t;
-        })
-                .scheduleWithFixedDelay((Runnable) () -> {
-                    try {
-                        List<CoreTable> newBizInfo = sequenceDao.getAllBizInfo();
-                        Set<BizInstance> newBizInstance = Sets.newConcurrentHashSet();
-                        //get new all bizInstance
-                        buildBizInstance(newBizInstance, newBizInfo);
-                        Sets.SetView<BizInstance> union = Sets.union(allBizInstance, newBizInstance);
-                        allBizInstance = union.immutableCopy();
-                    } catch (Throwable e) {
-                        log.info("some thing error {}", e);
-                    } finally {
+        }).scheduleWithFixedDelay((Runnable) () -> {
+            try {
+                List<CoreTable> newBizInfo = sequenceDao.getAllBizInfo();
+                Set<BizInstance> newBizInstance = Sets.newConcurrentHashSet();
+                //get new all bizInstance
+                buildBizInstance(newBizInstance, newBizInfo);
+                Sets.SetView<BizInstance> union = Sets.union(allBizInstance, newBizInstance);
+                allBizInstance = union.immutableCopy();
+            } catch (Throwable e) {
+                log.info("some thing error {}", e);
+            } finally {
 
-                    }
+            }
 
-                }, 60, 60, TimeUnit.SECONDS);
+        }, 60, 60, TimeUnit.SECONDS);
     }
 
 }
