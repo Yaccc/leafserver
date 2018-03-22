@@ -3,7 +3,6 @@ package org.yaccc.leafserver.common;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import sun.misc.Contended;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -11,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by xiezhaodong  on 2018/2/13
  */
 @Builder
-@Contended// why I will add it
+//@Contended// why I will add it ,False Sharing?
 public class Segment {
     @Getter
     @Setter
