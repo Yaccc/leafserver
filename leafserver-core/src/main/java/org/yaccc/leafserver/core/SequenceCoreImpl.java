@@ -106,7 +106,7 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                 Segment segment = sequenceService.buildSegment(instance.getAppName(), instance.getKey());
                 if (segment != null) {
                     bizSegmentsBuffer.setOtherSegment(segment);
-                    bizSegmentsBuffer.setNextReady(true);
+                    bizSegmentsBuffer.setNextReady(true);//volatile write
                 }
             } finally {
                 bizSegmentsBuffer.getIsRunning().set(false);

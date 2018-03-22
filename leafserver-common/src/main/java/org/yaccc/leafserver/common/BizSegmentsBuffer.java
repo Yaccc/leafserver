@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BizSegmentsBuffer {
     private AtomicBoolean isRunning = new AtomicBoolean(false);
     private volatile boolean isNextReady = false;
-    private Segment[] segments = new Segment[2];
+    private Segment[] segments = new Segment[2];//maybe atomicarray?
     public static final int FIRST_SEGMENT = 0, SECOND_SEGMENT = 1;
     private volatile int currentSegment = 0;
 
