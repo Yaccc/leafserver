@@ -24,13 +24,16 @@ public class LeafServerBootstarp {
     }
 
 
+
     public static void main(String[] args) {
         try {
             log.info("Initializing leafserver...");
             SpringApplication.run(LeafServerBootstarp.class, args);
             log.info("Started leafserver , enjoy it!!");
+
+
         } catch (Exception e) {
-            log.error("start leafserver error {}",e);
+            log.error("start leafserver error {}", e);
             System.exit(0);
         }
     }

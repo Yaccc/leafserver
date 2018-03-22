@@ -73,6 +73,7 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
 
                 Long segmentId = LeafServerUtils.getSegmentId(currentSegment);
                 if (segmentId != null) {
+                    log.debug("get result is {}", segmentId);
                     return segmentId;
                 } else {
                     //current segment have no id;
