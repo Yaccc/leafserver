@@ -1,4 +1,4 @@
-CREATE TABLE `leaf`.`<table_name>` (
+CREATE TABLE `core_table` (
 	`id` bigint(19) NOT NULL AUTO_INCREMENT,
 	`app_name` varchar(256) NOT NULL,
 	`key` varchar(256) NOT NULL,
