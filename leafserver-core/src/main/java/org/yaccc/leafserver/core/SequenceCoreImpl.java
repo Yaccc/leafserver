@@ -43,9 +43,15 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
             BizInstance instance = iterator.next();
             if (instance.equals(biz)) {
                 rr.id(getIdFromInstance(instance));//must instance
+                return LeafServerUtils.wrapperResult(rr.build());
             }
         }
-        return LeafServerUtils.wrapperResult(rr.build());
+        return Result.builder()
+                .errMsg("have no biz ,please regist your biz to leafserver")
+                .isSuccess(false)
+                .build();
+
+
     }
 
     private Long getIdFromInstance(BizInstance instance) {
