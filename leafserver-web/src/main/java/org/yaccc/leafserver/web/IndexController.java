@@ -31,7 +31,6 @@ public class IndexController {
     @RequestMapping("/index")
     @ResponseBody
     String home(String app, String key) {
-        sequenceCore.nextValue(app, key);
         return "";
     }
 
