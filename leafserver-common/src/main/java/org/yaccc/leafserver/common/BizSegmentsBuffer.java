@@ -16,7 +16,6 @@ public class BizSegmentsBuffer {
     //    private Segment[] segments = new Segment[2];//unsafe.putObjectVolatile
     //Volatile can't make the values in the array visible
     private AtomicReferenceArray<Segment> segments = new AtomicReferenceArray(2);
-
     public static final int FIRST_SEGMENT = 0, SECOND_SEGMENT = 1;
     private volatile int currentSegment = 0;
 
