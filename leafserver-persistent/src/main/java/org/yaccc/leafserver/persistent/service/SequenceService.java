@@ -38,7 +38,12 @@ public class SequenceService {
         return transactionTemplate.execute(status -> {
 
             int success0 = sequenceDao.updateMaxId(appName, key);
-            CoreTable oneBizInfo = sequenceDao.getOneBizInfo(appName, key);
+            CoreTable oneBizInfo = null;
+            try {
+                oneBizInfo = sequenceDao.getOneBizInfo(appName, key);
+            } catch (Exception e) {
+                return null;
+            }
             if (success0 < 0 || oneBizInfo == null) {
                 status.setRollbackOnly();
                 log.error("transaction rollback !!!!,update SQL execute status is {}. and bizInfo is {}", success0, oneBizInfo);
