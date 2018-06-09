@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.yaccc.leafserver.common.Segment;
+import org.yaccc.leafserver.persistent.IService.ISequenceService;
 import org.yaccc.leafserver.persistent.SequenceDao;
 import org.yaccc.leafserver.persistent.model.CoreTable;
 
@@ -19,7 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Service
 @Slf4j
-public class SequenceService {
+public class SequenceService implements ISequenceService {
     @Resource(name = "txManager")
     private PlatformTransactionManager transactionManager;
     @Autowired
@@ -61,7 +62,11 @@ public class SequenceService {
 
         });
 
-
     }
 
+    @Override
+    public void changeStep(@NonNull String appName, @NonNull String key, int step) {
+
+
+    }
 }

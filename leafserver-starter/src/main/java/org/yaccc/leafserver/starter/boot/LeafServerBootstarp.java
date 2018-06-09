@@ -31,7 +31,6 @@ public class LeafServerBootstarp {
             SpringApplication.run(LeafServerBootstarp.class, args);
             log.info("Started leafserver , enjoy it!!");
 
-
         } catch (Exception e) {
             log.error("start leafserver error {}", e);
             System.exit(0);

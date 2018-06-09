@@ -28,6 +28,10 @@
             <version>19.0</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.yaccc.leafserver</groupId>
             <artifactId>leafserver-persistent</artifactId>
             <version>1.0-SNAPSHOT</version>

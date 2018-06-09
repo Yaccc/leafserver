@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.yaccc.leafserver.biz.BizInstance;
-import org.yaccc.leafserver.common.BizSegmentsBuffer;
-import org.yaccc.leafserver.common.LeafServerUtils;
-import org.yaccc.leafserver.common.Result;
-import org.yaccc.leafserver.common.Segment;
-import org.yaccc.leafserver.persistent.service.SequenceService;
+import org.yaccc.leafserver.common.*;
+import org.yaccc.leafserver.persistent.IService.ISequenceService;
 
 import javax.annotation.PostConstruct;
 import java.util.Iterator;
@@ -24,10 +21,14 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 @Service
 @ConfigurationProperties(prefix = "org.yaccc.leafserver.pool")
-public class SequenceCoreImpl extends AsyncSegmentPollDefined implements SequenceCore {
+public class SequenceCoreImpl extends AsyncSegmentPollDefined implements ISequenceCore {
 
     @Autowired
-    SequenceService sequenceService;
+    private ISequenceService sequenceService;
+
+    @Autowired
+    private AutoAdaptQPS autoAdaptQPS;
+
 
 
     @Override
@@ -66,7 +67,8 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                     bizSegmentsBuffer.setFirstSegment(segment);
                     bizSegmentsBuffer.setCurrentSegment(BizSegmentsBuffer.FIRST_SEGMENT);
                     instance.setBizSegmentsBuffer(bizSegmentsBuffer);
-                    return segment.getLongFactory().getAndIncrement();
+                    long segmentId = segment.getLongFactory().getAndIncrement();
+                    return segmentId;
                 }
             } else {
                 Segment currentSegment = bizSegmentsBuffer.getCurrentSegment();
@@ -90,13 +92,13 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
                         Segment nowSegment = bizSegmentsBuffer.getCurrentSegment();
                         return LeafServerUtils.getSegmentId(nowSegment);//maybe is not null,nedd fix it
                     }
-                    return -2L;//all have no id
+                    return LeafServerConstants.NOT_FOUND_ID_WAIT_LOAD;//all have no id
                 }
 
             }
         }
 
-        return -1L;//DB returen null
+        return LeafServerConstants.DATABASE_ERROR;//DB returen null
     }
 
     @PostConstruct
@@ -124,6 +126,23 @@ public class SequenceCoreImpl extends AsyncSegmentPollDefined implements Sequenc
     @Override
     public List<Result> nextListValues(@NonNull String appName, @NonNull String key) {
         return null;
+    }
+
+
+    private void sceduleChangeStepThread(long id, Segment segment, BizInstance instance) {
+        LeafServerConstants.SegmentNumStatus status;
+        if (id == segment.getMin()) {
+            status = LeafServerConstants.SegmentNumStatus.START;
+        } else if (id == segment.getMax()) {
+            status = LeafServerConstants.SegmentNumStatus.END;
+        } else {
+            //不是开头和末尾,直接跳过不记录时间
+            return;
+        }
+        //时间非常重要,不能在调度线程里面生成,影响精度
+        //由于调度的原因,可能有些小问题,除非完全同步运行,异步方式可能end在start之前进入
+        long now = System.currentTimeMillis();
+        asyncGetSegment.execute(() -> autoAdaptQPS.recordSegmentStartAndEndTime(status, segment, instance, now));
     }
 
 }

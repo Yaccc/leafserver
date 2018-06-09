@@ -34,6 +34,8 @@ public interface SequenceDao {
     @Update("update core_table set now_max_id=now_max_id+step where app_name=#{appName} and `key`=#{key}")
     int updateMaxId(@Param("appName") String appName, @Param("key") String key);
 
+    @Update("update core_table set step=#{step} where app_name=#{appName} and `key`=#{key}")
+    int changeStep(@Param("appName") String appName, @Param("key") String key, @Param("step") int step);
 
     @Select("select * from core_table WHERE app_name=#{appName} and `key`=#{key}")
     @Results({
