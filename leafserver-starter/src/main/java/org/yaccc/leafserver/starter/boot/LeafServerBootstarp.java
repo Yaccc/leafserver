@@ -24,10 +24,10 @@ public class LeafServerBootstarp {
     }
 
 
-
+    //banner power by: http://patorjk.com/software/taag/#p=display&h=0&v=1&f=Doom&t=leafserver
     public static void main(String[] args) {
         try {
-            log.info("Initializing leafserver...");
+            log.info("Initializing leafserver,banner powerd by: http://patorjk.com/software/taag/#p=display&h=0&v=1&f=Doom&t=leafserver");
             SpringApplication.run(LeafServerBootstarp.class, args);
             log.info("Started leafserver , enjoy it!!");
 

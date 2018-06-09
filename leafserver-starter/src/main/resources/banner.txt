@@ -9,3 +9,4 @@ ${AnsiColor.BRIGHT_BLUE}
 :::SpringBoot${spring-boot.formatted-version}
 
 ${AnsiColor.DEFAULT}
+
